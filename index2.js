@@ -15,6 +15,10 @@ io.on("connection", (socket) => {
     console.log("broadcasted");
     socket.broadcast.emit("receive-changes", delta);
   })
+ //socket.on("send-mode-change", (data) => {
+ //  console.log("broadcast mode", data);
+ //  socket.broadcast.emit("reveive-mode-change", data);
+ //})
 });
 
 const PORT = 5000;
