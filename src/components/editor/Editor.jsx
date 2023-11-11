@@ -11,15 +11,15 @@ import 'brace/mode/golang';
 import 'brace/theme/github';
 import 'brace/theme/monokai';
 
-function Editor() {
+function Editor(data) {
 
-  const [socket, setSocket] = useState();
+  const [socket, setSocket] = useState(null);
   const [session_id, setSessionId] = useState('meow');
   const [editorValue, setEditorValue] = useState('');
   const [collaborator, setCollaborator] = useState(null);
   const [lastAppliedChange, setLastAppliedChange] = useState(null);
   const [justClearedBuffer, setJustClearedBuffer] = useState(false);
-
+  const [mode, setMode] = useState(data.mode);
 //  useEffect(() => {
 //      const collaborationSocket = io.connect('https://code.thayer.dartmouth.edu:1337', {
 //        query: 'session_id=' + session_id,
@@ -89,7 +89,11 @@ function Editor() {
     return () => {
       io_socket.disconnect();
     }
-  }, []);  
+  }, []); 
+
+  const applyModeChange = (data) => {
+    console.log(7, data)
+  }
 
   useEffect(() => {
     if (socket == null) return;
@@ -97,10 +101,18 @@ function Editor() {
     const applyDeltas = (delta) => {
       console.log(1, delta)
 
+       if (delta.hasOwnProperty('mode')) {
+        setMode(delta.mode);
+        data.changeLanguage({
+          mode: delta.mode 
+        })
+
+        return; 
+      }
       console.log(6, editorValue)
       setEditorValue((prevEditorValue) => {
         var editorValueArray = prevEditorValue.split("\n");
-
+        
         if (delta.action === 'insert') {
           var prefixArray = editorValueArray.slice(0, delta.start['row']);
           var suffixArray = editorValueArray.slice(delta.start['row'] + 1, editorValueArray.length);
@@ -157,16 +169,33 @@ function Editor() {
   
   
     socket.on("receive-changes", applyDeltas)
+    // socket.on("receive-mode-change", () => console.log(8, "mode change"));
+
 
     return () => {
       socket.off("receive-changes")
+      // socket.off("receive-mode-change")
     }
   }, [socket])
+
+  //useEffect(() => {
+  //  console.log(data.mode)
+  //}, [data.mode])
+
+  useEffect(() => {
+    setMode((mode) => {
+      return data.mode;
+    })
+    if (socket == null) return;
+    socket.emit('send-changes', {
+      mode: data.mode
+    });
+  }, [data.mode])
 
   return (
     <AceEditor
       id="editor"
-      mode = "javascript"
+      mode = {mode}
       theme = "monokai"
       onChange = {handleEditorChange}
       name = "abcd"

@@ -10,13 +10,12 @@ export default function Navbar(data) {
       value={data.selectedLanguage} // ...force the select's value to match the state variable...
       onChange={data.onChange} 
       >
-        <option value="54">C++</option>
-        <option value="50">C</option>
-        <option value="51">C#</option>
-        <option value="62">Java</option>
-        <option value="63">Javascript</option>
-        <option value="71">Python</option>
-        <option value="22">Go</option>
+        <option value="c_cpp">C/C++</option>
+        <option value="csharp">C#</option>
+        <option value="java">Java</option>
+        <option value="javascript">Javascript</option>
+        <option value="python">Python</option>
+        <option value="golang">Go</option>
       </select>
     </div>
   )
