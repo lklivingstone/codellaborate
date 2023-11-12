@@ -14,72 +14,19 @@ import 'brace/theme/monokai';
 function Editor(data) {
 
   const [socket, setSocket] = useState(null);
-  const [session_id, setSessionId] = useState('meow');
   const [editorValue, setEditorValue] = useState('');
-  const [collaborator, setCollaborator] = useState(null);
-  const [lastAppliedChange, setLastAppliedChange] = useState(null);
-  const [justClearedBuffer, setJustClearedBuffer] = useState(false);
   const [mode, setMode] = useState(data.mode);
-//  useEffect(() => {
-//      const collaborationSocket = io.connect('https://code.thayer.dartmouth.edu:1337', {
-//        query: 'session_id=' + session_id,
-//      });
-//
-//      collaborationSocket.on('change', (delta) => {
-//        delta = JSON.parse(delta);
-//        setLastAppliedChange(delta);
-//        // Update the editor content with the received change
-//        setEditorValue(editorValue + delta);
-//      });
-//
-//      collaborationSocket.on('clear_buffer', () => {
-//        setJustClearedBuffer(true);
-//        console.log('setting editor empty');
-//        setEditorValue('');
-//      });
-//
-//      setCollaborator(collaborationSocket);
-//
-//      // Clean up the socket connection when the component unmounts
-//      return () => {
-//        collaborationSocket.disconnect();
-//      };
-//    }, [session_id]);
-
-
-    //  editorElement?.getSession()?.getDocument()?.applyDeltas([delta])
-    // Apply deltas to the code content
-    //setEditorValue((prevCode) => {
-      // Clone the previous code content
-    //  const newCode = [...prevCode];
-      // Apply the delta to the new code content
-   // if (delta.action === 'insert') {
- //     newCode.splice(delta.start.row, 0, ...delta.lines);
- //   } else if (delta.action === 'remove') {
- //     newCode.splice(delta.start.row, delta.end.row - delta.start.row + 1);
- //   }
-
- //   // Join the code content back to a string
- //   return newCode.join('\n');
- //   });
   useEffect(() => { 
     console.log(2, editorValue);
   }, [editorValue])
   
   const handleEditorChange = (newCode, event) => {
-      console.log(6, event, newCode);
-      setEditorValue(newCode);
-    
-      if (socket == null) return;
-      socket.emit('send-changes', event)
-//  //      // TODO: Efficiently track change IDs to prevent conflicts
-//      if (lastAppliedChange !== newEditorValue && !justClearedBuffer) {
-//        // Send the change to the server
-//        collaborator.emit('change', JSON.stringify(newEditorValue));
-//      }
-//      setJustClearedBuffer(false);
-//      setEditorValue(newEditorValue);
-    };
+    console.log(6, event, newCode);
+    setEditorValue(newCode);
+  
+    if (socket == null) return;
+    socket.emit('send-changes', event)
+  };
 
   useEffect(() => {
     const io_socket = io("http://localhost:5000");
@@ -90,10 +37,6 @@ function Editor(data) {
       io_socket.disconnect();
     }
   }, []); 
-
-  const applyModeChange = (data) => {
-    console.log(7, data)
-  }
 
   useEffect(() => {
     if (socket == null) return;
@@ -120,8 +63,6 @@ function Editor(data) {
           var prefixString = editorValueArray[delta.start['row']].slice(0, delta.start['column']);
           // var middleString = delta.lines[0];
           var suffixString = editorValueArray[delta.start['row']].slice(delta.start['column'], editorValueArray[delta.start['row']].length);
-
-          // var currString = prefixString + delta.lines[0];
           
           prefixString += delta.lines[0];
 
@@ -134,11 +75,9 @@ function Editor(data) {
             newDeltaLines[newDeltaLines.length - 1] += suffixString;
           }
 
-          // var currString = prefixString + middleString + suffixString;
           var finalArray = [...prefixArray, prefixString, ...newDeltaLines, ...suffixArray];
 
           var finalString = finalArray.join("\n");
-          // console.log(5, prevEditorValue, prefixString, middleString, suffixString, prefixArray, currString, suffixArray, finalString);
           return finalString;
         }
       else {  
@@ -147,40 +86,21 @@ function Editor(data) {
 
         var prefixString = ``;
         var suffixString = ``;
-        var middleString = ``;
-        //if (delta.start['row'] == delta.end['row']) { 
         prefixString = editorValueArray[delta.start['row']].slice(0, delta.start['column']);
         suffixString = editorValueArray[delta.end['row']].slice(delta.end['column'], editorValueArray[delta.end['row']].length);
-        //}
-        //else {
-        //    
-        //  }
         var finalArray = [...prefixArray, prefixString + suffixString, ...suffixArray];
 
         var finalString = finalArray.join("\n");
 
         return finalString;
       }
-
-       // If the action is not 'insert', return the previous value
-       return prevEditorValue;
      });
     }
-  
-  
     socket.on("receive-changes", applyDeltas)
-    // socket.on("receive-mode-change", () => console.log(8, "mode change"));
-
-
     return () => {
       socket.off("receive-changes")
-      // socket.off("receive-mode-change")
     }
   }, [socket])
-
-  //useEffect(() => {
-  //  console.log(data.mode)
-  //}, [data.mode])
 
   useEffect(() => {
     setMode((mode) => {
