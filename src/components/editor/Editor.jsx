@@ -16,12 +16,8 @@ function Editor(data) {
   const [socket, setSocket] = useState(null);
   const [editorValue, setEditorValue] = useState('');
   const [mode, setMode] = useState(data.mode);
-  useEffect(() => { 
-    console.log(2, editorValue);
-  }, [editorValue])
   
   const handleEditorChange = (newCode, event) => {
-    console.log(6, event, newCode);
     setEditorValue(newCode);
   
     if (socket == null) return;
@@ -29,7 +25,7 @@ function Editor(data) {
   };
 
   useEffect(() => {
-    const io_socket = io("http://localhost:5000");
+    const io_socket = io("http://localhost:8080");
     setSocket(io_socket);
 
 
@@ -40,9 +36,7 @@ function Editor(data) {
 
   useEffect(() => {
     if (socket == null) return;
-    console.log("received");
     const applyDeltas = (delta) => {
-      console.log(1, delta)
 
        if (delta.hasOwnProperty('mode')) {
         setMode(delta.mode);
@@ -52,7 +46,6 @@ function Editor(data) {
 
         return; 
       }
-      console.log(6, editorValue)
       setEditorValue((prevEditorValue) => {
         var editorValueArray = prevEditorValue.split("\n");
         

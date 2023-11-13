@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+### THE APPLICATION IS NOT YET DEPLOYED
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Click here for demonstration](#demonstration)
 
-## Available Scripts
+# Codellaborate
 
-In the project directory, you can run:
+This is a NodeJS ReactJS Application. I wanted to build an application using which I can transfer code between multiple systems.
 
-### `npm start`
+It is built with socket.io 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Table of content
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* [Description](#description)
+* [Upcoming](#upcoming)
+* [Deployment](#deployment)
+* [Links](#links)
+* [Demonstration](#demonstration)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Description
 
-### `npm run build`
+I used Ace Editor for the code editor on the website. For my use case, there was no **delta**, so I created my delta function which improved the performance. This ensured that only the changes were broadcasted and not the entire code.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Upcoming
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* I have to deploy this application.
+* Add database layer
+* Create a URL-based system for creating multiple "rooms" for people to collaborate with.
+* Authentication
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment
 
-### `npm run eject`
+For deployment, I am trying to use Microsoft Azure due to the availability of free credits through the Student's Scholarship.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Links
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The backend is currently having issues with deployment, hence the interface is not accessible. You can watch the demonstration video below!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Demonstration
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Video demonstrating real-time collaboration between multiple users:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://github.com/lklivingstone/codellaborate/assets/74340009/b63e8ebe-7fae-4b54-a7ed-87d06b42c31d
